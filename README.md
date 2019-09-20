@@ -1,9 +1,10 @@
-# Hard Mode Hangman CLI
-A CLI hangman built with Node.js, with some hard words to guess.
+# Hard Mode CLI Word Guess
+
+A CLI word guessing game built with Node.js, with some hard words to guess.
 
 ## Demo
 
-![Alt Text](./demo.gif) 
+![Alt Text](./demo.gif)
 
 ## Prerequisites
 
@@ -29,8 +30,7 @@ Then start the game:
 
 ## Rules
 
-* Follow the prompt to guess a letter. Any character that is a-z or A-Z is a valid guess.
-* You have 10 guesses, including the last one.
-* Once you win or run out of guesses, you can play again using a new word.
-* Good luck!
-
+- Follow the prompt to guess a letter. Any character that is a-z or A-Z is a valid guess.
+- You have 10 guesses, including the last one.
+- Once you win or run out of guesses, you can play again using a new word.
+- Good luck!
