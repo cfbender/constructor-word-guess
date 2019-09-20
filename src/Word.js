@@ -1,4 +1,5 @@
 const Letter = require("./Letter");
+const chalk = require("chalk");
 
 class Word {
   constructor(secret) {
@@ -15,13 +16,15 @@ class Word {
     let correct = false;
     this.arr.forEach(letter => {
       letter.test(userGuess);
-      if (letter.guessed) {
+      if (letter.secret === userGuess && letter.guessed) {
         correct = true;
       }
     });
 
     if (correct) {
-      console.log("Correct!");
+      console.log(chalk.green("\nCorrect!\n"));
+    } else {
+      console.log(chalk.red("\nIncorrect!\n"));
     }
   }
 

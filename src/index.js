@@ -1,6 +1,7 @@
 const Word = require("./Word");
 const inquirer = require("inquirer");
 let guessed = [];
+let guessesLeft = 10;
 let secret = "";
 const words = [
   "awkward",
@@ -58,7 +59,12 @@ const init = () => {
   return new Promise((resolve, reject) => {
     secretWord = words[Math.floor(Math.random() * words.length)];
     guessed = [];
-    resolve(new Word(secretWord));
+    guessesLeft = 10;
+    let newSecret = new Word(secretWord);
+    console.log("\nNew Word: \n");
+    newSecret.display();
+    console.log("\n");
+    resolve(newSecret);
   });
 };
 
@@ -74,6 +80,16 @@ const done = async () => {
   return res;
 };
 
+const playAgain = async () => {
+  let { again } = await done();
+  if (again) {
+    secret = await init();
+    prompt();
+  } else {
+    return;
+  }
+};
+
 const prompt = async () => {
   let { guess } = await inquirer.prompt([
     {
@@ -83,6 +99,7 @@ const prompt = async () => {
       validate: input => /^[a-zA-Z]$/.test(input)
     }
   ]);
+  guessesLeft--;
   guess = guess.toLowerCase();
   if (/^[a-z]$/.test(guess)) {
     if (!guessed.includes(guess)) {
@@ -90,17 +107,20 @@ const prompt = async () => {
       secret.guess(guess);
       secret.display();
       if (secret.finished()) {
-        console.log("Done!");
-        let { again } = await done();
-        if (again) {
-          let newWord = await init();
-          secret = new Word(newWord);
-          prompt();
-        } else {
-          return;
-        }
+        console.log("\nYou Win! \n");
+        playAgain();
       } else {
-        return prompt();
+        if (guessesLeft) {
+          console.log(`
+Guesses left: ${guessesLeft}
+          `);
+          return prompt();
+        } else {
+          console.log(`
+You're all out of guesses!
+`);
+          playAgain();
+        }
       }
     } else {
       console.log(`You have already guessed ${guess}!`);
