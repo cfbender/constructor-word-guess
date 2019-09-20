@@ -24,6 +24,17 @@ class Word {
       console.log("Correct!");
     }
   }
+
+  finished() {
+    let finished = true;
+    this.arr.forEach(letter => {
+      if (!letter.guessed) {
+        finished = false;
+      }
+    });
+
+    return finished;
+  }
 }
 
 module.exports = Word;
